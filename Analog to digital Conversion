@@ -1,0 +1,25 @@
+Basic Element of Signal Processing Unit
+
+What is signal Processing 
+ - Field of science involves manipulation of signal to get desired shape. Transform from time domaine to frequency (vice versa )
+ - Signal exist in nature are continuous interval (t1 - t2 ) Interval can range from -infinity to infinity
+ 
+ 
+
+
+
+
+
+Analog to Digital Conversion
+
+
+Fundamental Continuous Time Signals
+
+
+Fundamental Discrete Time Signal
+
+Sampling and Reconstruction of Signal
+
+
+Nyquist Sampling Theorem
+
