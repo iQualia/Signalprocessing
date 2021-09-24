@@ -1,0 +1,311 @@
+#- Altered by Iqraq Kamal
+
+# # Signal Denoising by Moving Average Filter
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+# create signal
+srate = 256 # Hz
+t  = np.arange(0,3,1/srate)
+pnts     = len(t)
+
+# creating a noiseless signal
+x = np.sin(2*np.pi * 2 * t)
+
+# creating a random noise
+noise  = 5 * np.random.randn(pnts)
+
+# Adding noise on signal
+Noisysignal = x + noise
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(t,Noisysignal,'g',label = 'Noisy Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.legend(fontsize = 15)
+plt.show()
+
+N = 30                # N = order of moving average  filetr. FilterWindow is actually (2N + 1). 
+                      #Increasing the order of filter will increase the smoothness of filtered signal
+
+Noisysignal.shape[0]
+
+# Initialize denoised signal    
+filt_sig = np.zeros(Noisysignal.shape[0])
+
+# Applying moving average filter
+
+for i in range(0,Noisysignal.shape[0]):
+    filt_sig[i] = np.mean( Noisysignal[i:(2*N + 1) + i])
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(t,Noisysignal,'g-',label = 'NoisySignal')
+plt.plot(t,filt_sig,'r-',linewidth =3,label = 'Filtered Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.title('Moving average filter with order=%d.' %N, fontsize = 25)
+plt.legend(fontsize = 15)
+plt.show()
+
+# # Signal denoising by Gaussian Mean Filter
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+# create signal
+srate = 512 # Hz
+t  = np.arange(0,3,1/srate)
+pnts     = len(t)
+
+# creating a noiseless signal
+x = np.sin(2*np.pi * 2 * t)
+
+# creating a random noise
+noise  = 5 * np.random.randn(pnts)
+
+# Adding noise on signal
+Noisysignal = x + noise
+
+print(pnts)
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(t,Noisysignal,'g',label = 'Noisy Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.legend(fontsize = 15)
+plt.show()
+
+# Generating Gaussian filter / kernel
+
+N = 100
+fwhm = 50 # ms # full-width half-maximum
+Gtime = 1000 * np.arange(-N,N)/srate # since fwhm is in ms, therefore we multiply it by 1000 to get Gtime in ms
+Gfilter = np.exp( -(4*np.log(2)*Gtime**2) / fwhm**2 ) # Generating Gaussian filter
+Gfilter = Gfilter /np.sum(Gfilter) # Normalizing the Gaussian Filter
+
+# plotting Gaussian filter / kernel
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(Gtime,Gfilter,'m',linewidth =3,label = 'Gaussian Filter')
+plt.xlabel('time in ms', fontsize = 15)
+plt.ylabel('Gain of the filter', fontsize = 15)
+plt.xlim([-100,100])
+plt.legend(fontsize = 15)
+plt.show()
+
+# ### Zero padding the noisy siganl to avoid edge effect
+
+sig_4_filter = np.concatenate ((np.zeros(N), Noisysignal, np.zeros(N)), axis= 0)  # zero padding to avoid edge effect
+
+K = len(Noisysignal)
+
+timeindex = np.concatenate ((np.arange(-N,0), np.arange(0,K) ,np.arange(K,K+N)), axis= 0)
+time_4_filter = timeindex/srate
+
+print(len(sig_4_filter))
+print(len(timeindex))
+
+plt.figure( figsize = (20,10))
+plt.plot(time_4_filter,sig_4_filter,'g', label = 'zero padded Noisy Signal to avoid edge effect')
+plt.xlabel('time in s', fontsize = 15)
+plt.ylabel('Amplitude', fontsize = 15)
+plt.legend(fontsize = 15)
+
+# Initialize the filtered signal
+
+Gfilt_sig = np.zeros(sig_4_filter.shape[0])
+
+# Applying Gaussian Filter
+for i in range(0,Noisysignal.shape[0]):
+    Gfilt_sig[i] = np.sum(sig_4_filter[i:2*N+i] * Gfilter)
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(time_4_filter,sig_4_filter,'g-',label = 'NoisySignal')
+plt.plot(time_4_filter,Gfilt_sig,'r-',linewidth = 3,label = 'Filtered Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.title('Gaussian Moving average filter of order=%d.' %N, fontsize = 25)
+plt.legend(fontsize = 15)
+plt.show()
+
+Gfilt_sig_clipped = Gfilt_sig[0:K] # clip off the edges to avoid edge effect.
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(time_4_filter,sig_4_filter,'g-',label = 'NoisySignal')
+plt.plot(t,Gfilt_sig_clipped,'r-',linewidth = 3,label = 'clipped Filtered Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.title('Gaussian Moving average filter order=%d.' %N, fontsize = 25)
+plt.legend(fontsize = 15)
+plt.show()
+
+# # Signal denoising by Median Filter
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+# create signal
+srate = 256 # Hz
+t  = np.arange(0,3,1/srate)
+pnts     = len(t)
+
+# creating a noiseless signal
+x = np.sin(2*np.pi * 2 * t)
+
+# creating a random noise
+noise  = 5 * np.random.randn(pnts)
+
+# Adding noise on signal
+signal = x + noise
+
+print(pnts)
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(t,signal,'g',label = 'Noisy Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.legend(fontsize = 15)
+plt.show()
+
+N = 50             
+
+# Initialize denoised signal    
+filt_sig = np.zeros(signal.shape[0])
+
+# Applying Median filter
+
+for i in range(0,signal.shape[0]):
+    filt_sig[i] = np.median(signal[i:N+i])
+
+# Applying moving average filter
+mean_filt_sig = np.zeros(signal.shape[0])
+for i in range(0,signal.shape[0]):
+    mean_filt_sig[i] = np.mean(signal[i:N+i])
+
+plt.figure(figsize = (24,14)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(t,signal,'g-',label = 'NoisySignal')
+plt.plot(t,filt_sig,'r-',linewidth =3,label = 'Median Filtered Signal')
+plt.plot(t,mean_filt_sig,'b-',linewidth = 3,label = 'Moving Average Filtered Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.title('Median and Moving average filters with order=%d.' %N, fontsize = 25)
+plt.legend(fontsize = 15)
+plt.show()
+
+# # Recovering signal from noisy spikes by MedianFilter
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+import pandas as pd
+
+signal = pd.read_csv('Spike.csv')
+
+signal.head(10)
+
+signal = np.array(signal)
+
+spiky = abs(signal)
+
+len(spiky)
+
+spiky.shape
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(spiky, label = 'signal with Spikes')
+plt.legend(fontsize = 25)
+plt.show()
+
+# use hist to pick threshold
+
+plt.figure(figsize = (10,8))
+plt.hist(spiky,50)
+plt.show()
+
+threshold = 50
+
+# ### How to use np.where for 1D and 2D array (Practicing np.where)
+
+# For 1D array
+
+a = np.array([1,2,3,4,5,16,27,38,99,110])
+print(a)
+print(a.shape)
+b= np.where(a>5)
+print(b)
+
+a[9]
+
+# For 2D array
+
+aa = np.array([1,2,3,4,5,16,27,38,99,110]).reshape(-1,1)
+print(aa)
+print(aa.shape)
+bb= np.where(aa>5)
+print(bb)
+
+len(bb)
+
+aa = np.array([1,2,3,4,5,16,27,38,99,110]).reshape(-1,1)
+print(aa)
+print(aa.shape)
+bb= np.where(aa>5)[0]
+print(bb)
+
+# ### Using np.where to find the indices of spiky signal having magnitude greater than 50
+
+threshold = 50
+
+# find signal values above the threshold value
+ultra_thresh = np.where(spiky > threshold)[0]
+
+ultra_thresh
+
+len(ultra_thresh)
+
+filtsig = np.copy(spiky)
+
+N = 100
+
+# Applying Median Filter
+
+for ii in range(0,ultra_thresh.shape[0]):
+    filtsig[ultra_thresh[ii]] = np.median(spiky[ultra_thresh[ii]:ultra_thresh[ii]+N])
+
+plt.figure(figsize =(20,10))
+plt.plot(spiky,'g', label = 'Spiky Signal')
+plt.plot(filtsig,'r', label = 'Filtered Signal')
+plt.legend(fontsize = 20)
+plt.show()
+
