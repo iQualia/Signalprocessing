@@ -1,0 +1,150 @@
+# Altered by Iqraq Kamal
+
+# Import necessary library
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+#test complex number
+z1 = 5 + 6j
+z2 = 5 + 6*1j
+z3 = complex(5,6)
+
+print(z1)
+print(z2)
+print(z3)
+
+# Extracting Real and Imaginary part of complex number.
+
+print(np.real(z1))
+print(np.imag(z1))
+
+
+# ## Plotting a complex numbers on complex plane
+
+# In[13]:
+
+
+z1 = complex(3,0)
+z2 = complex(-7,0)
+z3 = complex(2,3)
+z4 = complex(0,5)
+
+plt.figure(figsize = (12,8))
+style.use('dark_background')
+plt.plot( np.real(z1),np.imag(z1),'yo',markersize =15, label = '( 3)' )
+plt.plot( np.real(z2),np.imag(z2),'mo',markersize =15, label = '( -7)' )
+plt.plot( np.real(z3),np.imag(z3),'bo',markersize =15, label = '( 2 + 3j )' )
+plt.plot( np.real(z4),np.imag(z4),'ro',markersize =15, label = '( 5j )' )
+plt.xlim([-10,10])
+plt.ylim([-10,10])
+plt.plot([-10,10],[0,0],'g',lw = 3)
+plt.plot([0,0],[-10,10],'g', lw = 3)
+plt.plot([0,2], [0,3], 'r-',lw =3)
+plt.xlabel('Real axis',fontsize = 20)
+plt.ylabel('Imaginary axis',fontsize = 20)
+plt.title('Complex Plane',fontsize = 25)
+plt.legend(fontsize = 15)
+plt.show()
+
+
+# # Mathematical Operations on Complex Numbers
+
+
+z1 = 2 + 3j
+z2 = 7 + 5j
+
+# Extracting real and imaginary parts of both complex numbers.
+
+z1_r = np.real(z1)
+z1_i = np.imag(z1)
+z2_r = np.real(z2)
+z2_i = np.imag(z2)
+
+ZM = (z1_r   +   1j*z1_i) * (z2_r   +    1j*z2_i)
+
+print(ZM)
+
+### COMPLEX CONJUGATE OF A NUMBER ###
+
+z1 = 4 + 3j
+
+c_conj_z1 = np.conj(z1) # complex conjugate
+
+print(c_conj_z1)
+
+
+# In[7]:
+
+
+## Important property of a complex Number
+
+Mag_square = z1 * c_conj_z1
+print(Mag_square)
+
+print(np.abs(z1)**2)
+
+
+## Division of Complex Numbers ##
+z1 = 2 + 3j
+z2 = 7 + 5j
+
+ZD = z1 / z2
+print (ZD)
+
+
+
+
+# # Magnitude and Phase Calculation for Complex Numbers
+
+
+z = 5 + 6j
+
+# Magnitude of a Number
+
+mag_z = np.sqrt( np.real(z)**2 + np.imag(z)**2 )
+print(mag_z)
+
+# Angle with positive real axis
+
+ang_z = np.angle(z)
+print(ang_z)
+
+print(ang_z * 57.3) # angle in degrees
+
+plt.figure(figsize = (10,8))
+plt.plot( np.real(z),np.imag(z),'mo',markersize =15, label = '( 5 + 6j )' )
+plt.xlim([-10,10])
+plt.ylim([-10,10])
+plt.plot([-10,10],[0,0],'g',lw = 3)
+plt.plot([0,0],[-10,10],'g', lw = 3)
+plt.plot([0,5], [0,6], 'r-', lw = 3)
+plt.xlabel('Real axis',fontsize = 15)
+plt.ylabel('Imaginary axis',fontsize = 15)
+plt.title('Complex Plane',fontsize = 25)
+plt.legend(fontsize = 15)
+plt.show()
+
+
+# Parameters for Complex Sine wave
+
+t  = np.linspace(0,10,100) # time 
+f = 50;             # frequency 
+A = 1;             # amplitude 
+theta = np.pi/2;     # phase 
+
+# generate the sine wave
+Compx_wave = A * np.exp(-1j* (2*np.pi * f * t + theta) );
+
+# plot 
+
+plt.figure(figsize = (16,10))
+style.use('dark_background')
+plt.plot(t,np.real(Compx_wave),'b-',linewidth = 3, label='real part')
+plt.plot(t,np.imag(Compx_wave),'m-',linewidth = 3, label='imaginary part')
+plt.xlim([-0.1,10])
+plt.xlabel('time',fontsize = 15)
+plt.ylabel('amplitude', fontsize = 15)
+plt.title('Complex sine wave',fontsize = 20)
+plt.legend(fontsize = 15)
+plt.show()
