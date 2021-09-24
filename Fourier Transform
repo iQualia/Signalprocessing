@@ -1,0 +1,809 @@
+
+# # Constructing a Wave  with different Sine Waves
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+
+srate = 256  # Hz
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x1 = 5 * np.sin(2 * np.pi * 2 * t) # First sinewave
+
+x2 = 2 * np.sin(2 * np.pi * 4 * t) # Second sinewave
+
+x3 = 7 * np.sin(2 * np.pi * 6 * t) # Third sinewave
+
+x4 = x1 + x2 + x3                  # Combined sinewave
+
+
+
+
+# Plot every sine wave
+
+plt.figure(figsize = (24,14)) # set the size of figure
+plt.suptitle('Constructing a Wave with different Sine Waves', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+
+plt.subplot(2,2,1)
+plt.plot(t,x1,linewidth = 3)
+plt.title("SineWave of amplitude '5' and frequency '2 Hz'", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+plt.plot(t,x2,linewidth = 3)
+plt.title("SineWave of amplitude '2' and frequency '4 Hz'", fontsize = 25)
+plt.xlabel('time in sec.', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,3)
+plt.plot(t,x3,linewidth = 3)
+plt.title("SineWave of amplitude '7' and frequency '6 Hz'", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,4)
+plt.plot(t,x4,linewidth = 3)
+plt.title("Combined SineWave by adding above three sine waves", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+
+# # Difference between  sine wave and cosine wave
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+
+
+srate = 256  # Hz
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+
+SineWave = 3 * np.sin( 2*np.pi * 5 * t)
+CosineWave  = 3 * np.cos( 2*np.pi * 5 * t)
+plt.figure(figsize = (24, 14))
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+
+plt.plot(t,SineWave,'y',linewidth =3,label='SineWave')
+plt.plot(t,CosineWave,'r', linewidth = 3,label='CosineWave')
+plt.xlabel('Time'), plt.ylabel('Amplitude')
+plt.title('Sine and Cosine waves comparison', fontsize = 25)
+plt.legend(fontsize = 20)
+plt.xlim([0,1])
+plt.show()
+
+
+
+# # Constructing a Wave with different Cosine Waves
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+
+
+srate = 256  # Hz
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x1 = 5 * np.cos(2 * np.pi * 2 * t) # First sinewave
+
+x2 = 2 * np.cos(2 * np.pi * 4 * t) # Second sinewave
+
+x3 = 7 * np.cos(2 * np.pi * 6 * t) # Third sinewave
+
+x4 = x1 + x2 + x3                  # Combined sinewave
+
+
+# Plot every sine wave
+
+plt.figure(figsize = (24,14)) # set the size of figure
+plt.suptitle('Constructing a Wave with different Cosine Waves', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+
+plt.subplot(2,2,1)
+plt.plot(t,x1,linewidth = 3)
+plt.title("Cosine Wave of amplitude '5' and frequency '2 Hz'", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+plt.plot(t,x2,linewidth = 3)
+plt.title("Cosine Wave of amplitude '2' and frequency '4 Hz'", fontsize = 25)
+plt.xlabel('time in sec.', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,3)
+plt.plot(t,x3,linewidth = 3)
+plt.title("Cosine Wave of amplitude '7' and frequency '6 Hz'", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,4)
+plt.plot(t,x4,linewidth = 3)
+plt.title("Combined Cosine Wave by adding above three Cosine waves", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+
+# # Constructing a waveform with sine, cosine and a DC
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+srate = 256  # Hz
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x1 = np.sin(2 * np.pi * 2 * t) #   sinewave
+
+x2 = 2 * np.cos(2 * np.pi * 4 * t) # Cosinewave
+
+x3 = x1 + x2  # sum of sine and cosine
+
+DC = 2
+
+x4 = DC + x1 + x2 # sum of sine, cosine and DC.
+
+
+# Plotting
+
+plt.figure(figsize = (24,14)) # set the size of figure
+plt.suptitle('Constructing a Wave with Sine, cosine and DC', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,2,1)
+plt.plot(t,x1,linewidth = 3)
+plt.title("Sine Wave of amplitude '1' and frequency '2 Hz'", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+plt.plot(t,x2,linewidth = 3)
+plt.title("Cosine Wave of amplitude '2' and frequency '4 Hz'", fontsize = 25)
+plt.xlabel('time in sec.', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,3)
+plt.plot(t,x3,linewidth = 3)
+plt.title("Sum of Sine and Cosine wave", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,4)
+plt.plot(t,x4,linewidth = 3)
+plt.title("Sum of sine, Cosine and DC", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+
+
+
+# # Step by Step coding for Fourier transform
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+
+# Generating  the signal
+
+srate  = 256 # Hz
+t      = np.arange(0.,1.,1/srate)  # time vector in seconds
+amp    = 3
+f      = 5 #Hz
+x      = amp * np.sin( 2*np.pi*f*t ) # Signal
+
+# Initializing Fourier Coefficients
+X   = np.zeros(len(x),dtype=complex)
+
+for freq in range(0, len(t)):
+
+    # create complex sine wave and compute dot product with signal
+
+    csw = np.exp( -1j*2*np.pi*freq*t)
+
+    X[freq] = np.sum( np.multiply(x,csw) )
+
+
+# extract amplitudes
+amps = np.abs(X) / len(t);
+
+
+
+
+
+# Plotting Signal and Complex Sine Wave
+
+plt.figure(figsize = (24,12))
+style.use('dark_background')
+plt.plot(t,x, linewidth = 3, label='Signal With amp =3 and frquency = 5 Hz')
+plt.plot(t,3*np.real(csw),'r-',linewidth = 3, label='real part of csw')
+plt.plot(t,3*np.imag(csw),'m-',linewidth = 3, label='Imag part of csw')
+plt.xlabel('time',fontsize = 15)
+plt.ylabel('amplitude', fontsize = 15)
+plt.title('Signal Modelling With Complex Sine Wave',fontsize = 20)
+plt.xlim([0,1])
+plt.legend(fontsize = 15)
+plt.show()
+
+
+
+
+
+
+
+# Plotting the Signal and its Fourier Transform
+
+plt.figure(figsize = (24,10)) # set the size of figure
+plt.suptitle('Signal and its Fourier transform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,2,1)
+plt.plot(t,x,linewidth = 3)
+plt.title("Signal of amplitude '3' and frequency '5 Hz'", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+markerline, stemlines, baseline = plt.stem(amps)
+plt.setp(stemlines, 'linewidth', 3)
+plt.title(" Fourier transform of a signal", fontsize = 25)
+plt.xlabel('Indices', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+# The frequency spectrum of a real valued signal is always symmetric. Since the symmetric part is exactly a mirror image of
+# the first part, it provides no additional information.
+
+# # Correcting the amplitudes and converting indices to frequencies
+
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+import math
+
+# Generating  the signal
+
+srate  = 256 # Hz
+t      = np.arange(0.,1.,1/srate)  # time vector in seconds
+amp    = 3
+f      = 5 #Hz
+
+x      = amp * np.sin( 2*np.pi*f*t ) # Signal
+
+
+# Initializing Fourier Coefficients
+X   = np.zeros(len(x),dtype=complex)
+
+for freq in range(0, len(t)):
+    # create complex sine wave and compute dot product with signal
+    csw = np.exp( -1j*2*np.pi*freq*t )
+    X[freq] = np.sum( np.multiply(x,csw) )
+
+
+# extract amplitudes
+amps = 2 * np.abs(X)/len(t)
+
+# In the above line of code we multiplt by 2 to incorporate the negative frequecies of complex sinusoidal
+
+# converitng indices to frequency
+
+# There are 0 to 255 indices at which we generate the sine wave . These are frequency indices
+# not the frequency in hertz. Since we have n=256 indices including zero, therefore after (n/2) i.e 128 in
+# this case, we get the negative waveforms of the first 128 samples. It means after n=128,
+# the frequencies are violating the Nyquist criteria.
+# Thus in order to convert indices into hertz we need (n/2+1) or (n/2) linearly spaced samples between zero and
+# Nyquist ( srate/2) as shown below
+
+Nyquist = srate/2
+
+Hz = np.linspace(0, Nyquist, math.floor(len(t)/2 + 1))
+
+
+math.floor(len(t)/2)+1
+
+# Plotting the Signal and its Fourier Transform
+
+
+plt.figure(figsize = (24,12)) # set the size of figure
+plt.suptitle('Signal and its Fourier transform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,2,1)
+plt.plot(t,x,linewidth = 3)
+plt.title("Signal of amplitude '3' and frequency '5 Hz'", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+markerline, stemlines, baseline = plt.stem(Hz, amps[range(0,len(Hz))])
+plt.setp(stemlines, 'linewidth', 3)
+plt.xlim(0,10)
+plt.ylim(0,5)
+plt.title(" Fourier transform of a signal", fontsize = 25)
+plt.xlabel('Frequency in Hz', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+# # Fourier transform of a signal with multiple frequencies
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+import math
+
+srate = 256  # Hz
+Nyquist = srate / 2
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x1 = 5 * np.sin(2 * np.pi * 2 * t) # First sinewave
+
+x2 = 2 * np.sin(2 * np.pi * 4 * t) # Second sinewave
+
+x3 = 7 * np.sin(2 * np.pi * 6 * t) # Third sinewave
+
+x = x1 + x2 + x3                  # Combined sinewave
+
+
+# Initializing Fourier Coefficients
+X   = np.zeros(len(x),dtype=complex)
+
+for freq in range(0, len(t)):
+    # create complex sine wave and compute dot product with signal
+    csw = np.exp( -1j*2*np.pi*freq*t )
+    X[freq] = np.sum( np.multiply(x,csw) )
+
+
+# extract amplitudes
+amps = 2 * np.abs(X)/ len(t)
+
+# In the above line of code we multiplt by 2 to incorporate the negative frequecies of complex sinusoidal
+
+# converitng indices to frequency
+
+Nyquist = srate/2
+
+Hz = np.linspace(0, Nyquist, math.floor(len(t)/2)+1)
+
+# Plotting
+
+plt.figure(figsize = (24,14)) # set the size of figure
+plt.suptitle('Signal and its Fourier transform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,2,1)
+plt.plot(t,x,linewidth = 3)
+plt.title("Signal with frequencies 2,4 and 6 Hz", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+markerline, stemlines, baseline = plt.stem(Hz, amps[range(0,len(Hz))])
+plt.setp(stemlines, 'linewidth', 5)
+plt.xlim(0,10)
+plt.ylim(0,8)
+plt.title(" Fourier transform of a signal", fontsize = 25)
+plt.xlabel('Frequency in Hz', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+
+# # Fast Fourier transform
+
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from matplotlib import style
+import scipy
+
+srate = 256  # Hz
+Nyquist = srate / 2
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x1 = 5 * np.sin(2 * np.pi * 2 * t) # First sinewave
+
+x2 = 2 * np.sin(2 * np.pi * 4 * t) # Second sinewave
+
+x3 = 7 * np.sin(2 * np.pi * 6 * t) # Third sinewave
+
+x = x1 + x2 + x3   # Combined sinewave
+
+# Calculating Fourier Coefficients
+
+X = scipy.fft.fft(x)/len(t)
+
+
+X = 2 * np.abs(X)
+
+# converitng indices to frequency
+
+Nyquist = srate/2
+
+Hz = np.linspace(0, Nyquist, math.floor(len(t)/2)+1)
+
+# Plotting
+
+plt.figure(figsize = (24,14)) # set the size of figure
+plt.suptitle('Signal and its Fourier transform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,2,1)
+plt.plot(t,x,linewidth = 3)
+plt.title("Signal with amplitudes 5,2 and 7 and \n with frequencies 2,4 and 6 Hz respectively", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+markerline, stemlines, baseline = plt.stem(Hz, X[range(0,len(Hz))])
+plt.setp(stemlines, 'linewidth', 5)
+
+plt.xlim(0,10)
+plt.ylim(0,8)
+plt.title(" Fourier transform of a signal", fontsize = 25)
+plt.xlabel('Frequency in Hz', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+
+# # Fourier transform of a signal with sine, cosine and a DC Component
+
+#
+
+
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from matplotlib import style
+import scipy
+
+
+#
+
+
+srate = 256  # Hz
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x1 = 5 * np.sin(2 * np.pi * 10 * t) #   sinewave
+
+x2 = 3 * np.cos(2 * np.pi * 20 * t) # Cosinewave
+
+x3 = x1 + x2  # sum of sine and cosine
+
+DC = 2
+
+x = DC + x1 + x2 # sum of sine, cosine and DC.
+
+# Calculating Fourier Coefficients
+
+X = scipy.fft.fft(x)/len(t)
+
+X = np.abs(X)
+
+
+#
+
+
+# Plotting Signal and its Fourier Transform
+
+plt.figure(figsize = (24,14)) # set the size of figure
+plt.suptitle('Signal and its Fourier transform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,2,1)
+plt.plot(t,x,linewidth = 3)
+plt.title("Signal with sine, cosine and dc component", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+
+markerline, stemlines, baseline = plt.stem(X)
+plt.setp(stemlines, 'linewidth', 5)
+#plt.xlim(-.1,10)
+plt.title("Symmetric Fourier transform of a signal", fontsize = 25)
+plt.xlabel('Frequency Indices', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+#
+
+
+# converitng indices to frequency
+
+Nyquist = srate/2
+
+Hz = np.linspace(0, Nyquist, math.floor(len(t)/2)+1)
+
+
+# The line of code below is correcting the DC Coefficient magnitude. The DC
+#  Componenet doesn,t have its negative, therefore it should not be scaled by
+#  two. thats why we are extracting coefficents from 1 to end and scaled
+#  them but not the DC Componenet which is at 0.
+
+X[1:len(Hz)] = 2*X[1:len(Hz)];
+
+
+#
+
+
+# Plotting
+
+plt.figure(figsize = (24,14)) # set the size of figure
+plt.suptitle('Signal and its Fourier transform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,2,1)
+plt.plot(t,x,linewidth = 3)
+plt.title("Signal with sine, cosine and dc component", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,2,2)
+
+markerline, stemlines, baseline = plt.stem(Hz, X[range(0,len(Hz))])
+plt.setp(stemlines, 'linewidth', 5)
+plt.xlim(-.5,30)
+plt.title(" Fourier transform of a signal", fontsize = 25)
+plt.xlabel('Frequency in Hz', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.show()
+
+
+
+# # Amplitude and Power spectrum
+
+#
+
+
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from matplotlib import style
+import scipy
+
+
+#
+
+
+srate = 256  # Hz
+
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x1 = 0.5 * np.sin(2 * np.pi * 2 * t) # First sinewave
+
+x2 = 2 * np.sin(2 * np.pi * 4 * t) # Second sinewave
+
+x3 = 3 * np.sin(2 * np.pi * 6 * t) # Third sinewave
+
+x = x1 + x2 + x3   # Combined sinewave
+
+
+#
+
+
+X =  np.abs(scipy.fft.fft(x)/len(t))
+
+# converitng indices to frequency
+
+Nyquist = srate/2
+
+Hz = np.linspace(0, Nyquist, math.floor(len(t)/2)+1)
+
+X[1:len(Hz)] = 2*X[1:len(Hz)] # Amplitude Correction
+
+# Power Spectrum of a Signal
+
+X_Power = X**2
+
+
+#
+
+
+# Plotting
+
+plt.figure(figsize = (20,16)) # set the size of figure
+plt.suptitle('Signal and its Fourier transform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,1,1)
+plt.plot(t,x,linewidth = 3)
+plt.title("Signal With frequencies of 2,4 and 6Hz", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,1,2)
+plt.plot(Hz,X[range(0,len(Hz))],'ys-',linewidth = 3, label='Amplitude Spectrum')
+plt.plot(Hz,X_Power[range(0,len(Hz))],'ms-',linewidth = 3, label='Power Spectrum')
+plt.xlim([0,10])
+plt.xlabel('Frequency in Hz', fontsize = 20)
+plt.ylabel('Power', fontsize = 20)
+plt.title("Amplitude and Power spectrum of Signal", fontsize = 25)
+plt.legend(fontsize = 20)
+plt.show()
+
+# # Inverse Fourier transform
+
+#
+
+
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from matplotlib import style
+import scipy
+
+
+#
+
+
+# Generate the Signal
+
+srate = 256  # Hz
+Nyquist = srate / 2
+t = np.arange(0.,1.,1/srate) # time vector in seconds
+
+x = 3 * np.sin(2 * np.pi * 4 * t)
+
+
+#
+
+
+plt.figure(figsize = (16,8)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+plt.plot(t,x,'ms', linewidth = 1,label='Original Signal')
+plt.legend(fontsize = 15)
+plt.show()
+
+
+#
+
+
+# calculating FFT
+
+X = scipy.fft.fft(x) # we didnot normalize here as we have to take ifft as well.
+
+# calculating IFFT
+
+reconstruct_x = scipy.fft.ifft(X)
+
+plt.figure(figsize = (16,10)) # set the size of figure
+plt.suptitle('Signal and Reconstructed Signal', fontsize = 30)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.plot(t,x,'ms', markersize = 10,label='Original Signal')
+plt.plot(t,np.real(reconstruct_x),'y',linewidth = 3, label='Reconstructed Signal')
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('amplitude', fontsize = 20)
+plt.legend(fontsize = 15)
+plt.show()
+
+
+# # Application of Fourier transform
+
+# ##  Stationarity of a signal
+
+#
+
+
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from matplotlib import style
+import scipy
+
+
+
+
+srate = 256
+t = np.arange(0,10,1/srate)
+
+
+amp = np.linspace(1,10,len(t)) # linearly increasing amplitude
+
+
+x1 = 5 *np.sin(2*np.pi*5*t) # Stationary Signal
+x2 = amp * np.sin(2*np.pi*5*t) # Non Stationary Signal
+
+
+# Obtain Fourier coefficients and Hz vector
+
+X1 = 2 * np.abs(scipy.fft.fft(x1)/len(t))
+X2 = 2 * np.abs(scipy.fft.fft(x2)/len(t))
+
+Hz = np.linspace(0,srate/2,int(np.floor(len(t)/2)+1))
+
+
+plt.figure(figsize = (18,16)) # set the size of figure
+plt.suptitle('Signals and their Fourier tranform', fontsize = 40)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 15
+plt.rcParams['ytick.labelsize'] = 15
+
+plt.subplot(2,1,1)
+plt.plot(t,x1,'b',linewidth = 3)
+plt.plot(t,x2,'m',linewidth = 3)
+plt.title("Original Signal", fontsize = 25)
+plt.xlabel('time in sec', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+
+plt.subplot(2,1,2)
+plt.plot(Hz,X1[0:len(Hz)],'bo-')
+plt.plot(Hz,X2[0:len(Hz)],'ms-')
+plt.xlim([1,10])
+plt.title('Fourier transform', fontsize =25)
+plt.xlabel('Frequency in Hz', fontsize = 20)
+plt.ylabel('Amplitude', fontsize = 20)
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
