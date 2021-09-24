@@ -93,8 +93,6 @@ ZD = z1 / z2
 print (ZD)
 
 
-
-
 # # Magnitude and Phase Calculation for Complex Numbers
 
 
@@ -125,6 +123,8 @@ plt.title('Complex Plane',fontsize = 25)
 plt.legend(fontsize = 15)
 plt.show()
 
+
+#########################################################################SINE WAVE ############################################################################
 
 # Parameters for Complex Sine wave
 
