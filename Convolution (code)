@@ -1,0 +1,321 @@
+#### altered by Iqraq Kamal
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+# initiate random signal
+x1 = np.array([1,2,2,1,1])# signal one
+n1 = np.array([0,1,2,3,4])# signal twi
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+plt.subplot(2,2,1)
+markerline, stemlines, baseline = plt.stem(n1,x1, label = 'X1')
+plt.setp(stemlines, 'linewidth', 3) 
+plt.legend(fontsize = 30)
+
+
+# Generating and Plotting x2
+
+x2 = np.array([3,2,1])
+n2 = np.array([0,1,2])
+plt.subplot(2,2,2)
+markerline, stemlines, baseline = plt.stem(n2,x2, label = 'X2')
+plt.setp(stemlines, 'linewidth', 3) 
+plt.legend(fontsize = 30)
+
+# Plotting X1 at position 3
+plt.subplot(2,2,3)
+markerline, stemlines, baseline = plt.stem(n1,x1, label = 'X1')
+plt.legend(fontsize = 30)
+plt.setp(stemlines, 'linewidth', 3) 
+
+# Flipping of x2 and Plotting.
+
+f_x2 = x2[::-1] 
+n3 = np.array([-2,-1,0])
+plt.subplot(2,2,4)
+markerline, stemlines, baseline = plt.stem(n3,f_x2, label = 'flip_X2')
+plt.setp(stemlines, 'linewidth', 3) 
+plt.legend(fontsize = 30)
+plt.show()
+
+
+# ## Calculating convolution for mode = 'full'
+
+nx1 = len(x1)
+nx2 = len(x2)
+nconv = nx1 + nx2 - 1
+
+print(nx1)
+print(nx2)
+print(nconv)
+
+# Expanding x1 by zero padding - # zero padding is important to maintain dimension after convolution process.
+
+half_nx2 = int(np.round(nx2/2))
+
+data_4_conv = np.concatenate((np.zeros(half_nx2),  x1  , np.zeros(half_nx2)), axis = 0) #zero padding on both sides of x1
+
+print( half_nx2 )
+print( np.zeros(half_nx2) )
+print( data_4_conv )
+
+# Plotting data for convolution
+
+plt.figure(figsize = (20,10)) # set the size of figure
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+markerline, stemlines, baseline = plt.stem(data_4_conv, label = 'data_4_conv')
+plt.setp(stemlines, 'linewidth', 3) 
+plt.legend(fontsize = 30)
+plt.show()
+
+# ### Convolution by for loops
+
+
+convres = np.zeros(nconv)
+for k in range(0,nconv):
+    convres[k] = np.sum(f_x2 * data_4_conv[k:k+nx2])
+
+convres
+
+
+# plotting convolution
+
+plt.figure(figsize = (20,8)) # set the size of figure
+plt.suptitle('Convolution of X1 and X2', fontsize = 30)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+markerline, stemlines, baseline = plt.stem(convres)
+plt.setp(stemlines, 'linewidth', 3) 
+plt.show()
+
+
+# # Convolution by np.convolve using mode = "full"
+
+
+
+np.convolve(x1,x2,mode = 'full')
+
+
+
+# Plotting Convolution
+
+plt.figure(figsize = (20,8)) # set the size of figure
+plt.suptitle('Convolution of X1 and X2', fontsize = 30)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+plt.plot(convres,'g^',markersize = 20, label = 'Conv using for loop')
+plt.plot(np.convolve(x1,x2, mode = 'full'), 'r-', linewidth =3,label = 'Conv by np.convolve')
+plt.xlabel('Sample', fontsize = 15)
+plt.ylabel('Value', fontsize = 15)
+plt.legend(fontsize = 15)
+plt.show()
+
+# # Convolution by np.convolve using mode = "same"
+
+# Convolution by np.convolve
+
+np.convolve(x1,x2, mode = 'same')
+
+# Plotting convolution using for loops and np.convolve
+
+plt.figure(figsize = (20,8)) # set the size of figure
+plt.suptitle('Convolution of X1 and X2, mode = same', fontsize = 30)
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+plt.plot(np.convolve(x1,x2, mode = 'same'), 'r-', linewidth =3,label = 'Conv by np.convolve')
+plt.xlabel('Sample', fontsize = 15)
+plt.ylabel('Value', fontsize = 15)
+plt.legend(fontsize = 15)
+plt.show()
+
+
+# # Applications of Convolution
+
+# ####################################################################### .  Denoising Using Convolution
+
+# In[13]:
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+
+# In[14]:
+
+
+# create signal
+srate = 256 # Hz
+t  = np.arange(0,3,1/srate)
+pnts = len(t)
+
+print(pnts)
+print(t)
+
+
+# creating a noiseless signal
+x = np.sin(2*np.pi * 2 * t)
+
+# creating a random noise
+noise  = 5 * np.random.randn(pnts)
+
+# Adding noise on signal
+Noisysignal = x + noise
+
+# Plotting Noisy Signal
+
+plt.figure(figsize = (20,12))
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+plt.plot(t,Noisysignal, label = 'Noisy Signal')
+plt.legend(fontsize = 20)
+plt.show()
+
+# Selecting filter for denoising
+
+filter = 2*np.ones(50)/10  # Moving Average Filter
+filter
+
+
+# Filtering by convolution
+
+filteredSignal = np.convolve(Noisysignal,filter, mode = 'same')
+
+
+# Plotting filtered signal
+
+plt.figure(figsize = (20,12))
+plt.plot(filteredSignal, label = 'Filtered Signal')
+plt.legend(fontsize = 20)
+plt.show()
+
+# Plotting Noisy signal and filtered signal
+
+plt.figure(figsize = (20,16))
+plt.plot(Noisysignal,'g', label = 'Noisy Signal')
+plt.plot(filteredSignal,'r', label = 'Filtered Signal')
+plt.legend(fontsize = 20)
+plt.title('Signal Denoising', fontsize = 30)
+plt.show()
+
+# ######################################################.  Edge Detection Using Convolution
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+# Generating signal with edges
+
+NewSig = np.zeros(100)
+NewSig[15:35]=1
+NewSig[65:85]=1
+plt.figure(figsize = (20,8))
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+plt.xlim(0,100)
+plt.plot(NewSig,'o-', linewidth = 3, label = 'Signal with edges')
+plt.legend(fontsize = 20)
+plt.show()
+
+# Kernel for edge detection
+
+kernel = np.array([0.5,0.3,0.1,0,-0.1,-0.3,-0.5])
+kernel
+
+# Plotting the kernel
+
+plt.figure(figsize = (20,8))
+plt.plot(kernel,'o-', linewidth=3, label = 'Kernel for edge detection')
+plt.legend(fontsize = 20)
+plt.show()
+
+# Performing edge detection by convolution
+
+filt_sig = np.convolve(NewSig,kernel, mode = 'same')
+
+# Plotting Filtered Signal
+
+plt.figure(figsize = (20,8))
+plt.plot(filt_sig,linewidth =3, label = 'Filtered Signal')
+plt.legend(fontsize = 20)
+plt.show()
+
+# Plotting original signal and filtered signal
+
+plt.figure(figsize = (24,12))
+plt.plot(NewSig,'o-', linewidth =3, label = 'Original Signal')
+plt.plot(filt_sig,'r-',linewidth =3, label = 'Filtered Signal')
+plt.legend(fontsize = 20)
+plt.title('Edge Detection', fontsize = 30)
+plt.show()
+
+
+
+# # The Convolution Theorem
+
+# ### The convolution of two signals in time domain is equal to the point-wise multiplication of the signals in frequency domain.
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+sig = np.array([1,2,2,1,1])
+ker = np.array([3,2,1])
+
+
+# ### Convolution in time domain
+
+Time_dom = np.convolve(sig,ker)
+Time_dom
+
+
+
+nconv = len(Time_dom)
+print(nconv)
+
+
+# ### Convolution in frequency domain
+
+
+import scipy
+
+
+sigF = scipy.fft.fft(sig,nconv)
+kerF = scipy.fft.fft(ker,nconv)
+
+
+
+# Element-wise multiplication of signal and kernel
+sigFFT = sigF * kerF
+
+# Inverse FFT
+Freq_dom = np.real( scipy.fft.ifft( sigFFT ) )
+Freq_dom
+
+# ### Plotting time and frequency domain convolution
+
+
+plt.figure(figsize = (24,12))
+style.use('dark_background')
+plt.rcParams['xtick.labelsize'] = 25
+plt.rcParams['ytick.labelsize'] = 25
+plt.plot(Time_dom,'g^',markersize = 25, label='Time domain')
+plt.plot(Freq_dom,'r-',linewidth =3, label='Frequency domain')
+plt.legend(fontsize = 20)
+plt.title('The Convolution theorem', fontsize = 30)
+plt.show()
+
+
+
+
