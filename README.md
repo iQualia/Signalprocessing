@@ -16,5 +16,5 @@ This notes are far from complete - more will be uploaded from time to time
 6) Fourier Transform
 
 
-Take note, that the notes does not cover depth(mathematical explaination) but rather focusing more on conceptual level of those topic, If you are interested with the mathematical work behind each process contact me at iqraq.kamal@gmail.com
+Take note, that the notes do not cover in depth but rather focusing more on conceptual level of those topic, If you are interested with the mathematical work behind each process contact me at iqraq.kamal@gmail.com
 
