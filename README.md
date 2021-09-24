@@ -18,5 +18,5 @@ This notebook consists of short notes on Digital Signal Processing (including py
 This notes are far from complete - more will be uploaded from time to time!
 
 
-Take note, that the notes do not cover in depth mathematical explaination behind each process but rather focusing more on conceptual level of those topic, If you are interested with the mathematical work behind each process contact me at iqraq.kamal@gmail.com
+Take note, that the notes do not cover in depth mathematical explaination behind each process but rather focusing more on conceptual level of those topics, If you are interested with the mathematical work behind each process contact me at iqraq.kamal@gmail.com
 
